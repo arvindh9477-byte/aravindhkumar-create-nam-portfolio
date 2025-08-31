@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript Quiz</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    <div id="start-screen">
+      <h1>Welcome to the JavaScript Quiz</h1>
+      <button id="start-btn">Start Quiz</button>
+    </div>
+
+    <div id="quiz-screen" class="hidden">
+      <div class="question" id="question-text"></div>
+      <div class="answers" id="answer-buttons"></div>
+      <button id="next-btn" class="hidden">Next</button>
+    </div>
+
+    <div id="result-screen" class="hidden">
+      <h2>Quiz Completed!</h2>
+      <div id="score"></div>
+      <button id="restart-btn">Restart Quiz</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
