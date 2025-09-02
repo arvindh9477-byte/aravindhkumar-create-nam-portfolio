@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Quiz</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: rgba(0,0,0,0.6);
+      padding: 2rem;
+      border-radius: 15px;
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+    .logo {
+      width: 100px;
+      margin-bottom: 20px;
+    }
+    button {
+      background: #ff9800;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+      color: #fff;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #e68900;
+    }
+    .question-img {
+      max-width: 200px;
+      margin: 10px auto;
+      border-radius: 8px;
+      display: block;
+    }
+    .option {
+      display: block;
+      background: #2a5298;
+      padding: 10px;
+      margin: 10px auto;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .option:hover {
+      background: #3b6ac9;
+    }
+    .correct {
+      background: #4caf50 !important;
+    }
+    .wrong {
+      background: #f44336 !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="quiz-container">
+    <!-- Welcome Screen -->
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png" class="logo" alt="logo">
+    <h1>Welcome to the JavaScript Quiz!</h1>
+    <button onclick="startQuiz()">Start Quiz</button>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        question: "Which company developed JavaScript?",
+        options: ["Microsoft", "Netscape", "Sun Microsystems", "Oracle"],
+        correct: 1,
+        img: "" // removed image
+      },
+      {
+        question: "Which keyword is used to declare a variable in JavaScript?",
+        options: ["var", "int", "string", "declare"],
+        correct: 0,
+        img: "https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png"
+      },
+      {
+        question: "What is the output of: typeof null?",
+        options: ["object", "null", "undefined", "number"],
+        correct: 0,
+        img: "https://cdn-icons-png.flaticon.com/512/148/148753.png"
+      },
+      {
+        question: "Which symbol is used for comments in JavaScript?",
+        options: ["//", "#", "&lt;!-- --&gt;", "/* */"],
+        correct: 0,
+        img: "https://cdn-icons-png.flaticon.com/512/1380/1380338.png"
+      },
+      {
+        question: "Which method is used to parse a JSON string?",
+        options: ["JSON.parse()", "JSON.stringify()", "JSON.convert()", "JSON.toObject()"],
+        correct: 0,
+        img: "https://cdn-icons-png.flaticon.com/512/136/136525.png"
+      }
+    ];
+
+    let currentQ = 0;
+    let score = 0;
+
+    function startQuiz() {
+      currentQ = 0;
+      score = 0;
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const q = quizData[currentQ];
+      document.getElementById("quiz-container").innerHTML = `
+        <h2>Question ${currentQ + 1} of ${quizData.length}</h2>
+        ${q.img ? `<img src="${q.img}" class="question-img" alt="question image">` : ""}
+        <p>${q.question}</p>
+        ${q.options.map((opt, i) => `<div class='option' onclick='checkAnswer(${i})'>${opt}</div>`).join("")}
+      `;
+    }
+
+    function checkAnswer(selected) {
+      const q = quizData[currentQ];
+      const options = document.querySelectorAll('.option');
+
+      if (selected === q.correct) {
+        options[selected].classList.add('correct');
+        score++;
+      } else {
+        options[selected].classList.add('wrong');
+        options[q.correct].classList.add('correct');
+      }
+
+      setTimeout(() => {
+        currentQ++;
+        if (currentQ < quizData.length) {
+          showQuestion();
+        } else {
+          showResult();
+        }
+      }, 1500);
+    }
+
+    function showResult() {
+      document.getElementById("quiz-container").innerHTML = `
+        <h1>Quiz Completed!</h1>
+        <p>Your Score: ${score} / ${quizData.length}</p>
+        <button onclick='location.reload()'>Restart Quiz</button>
+      `;
+    }
+  </script>
+</body>
+</html>
